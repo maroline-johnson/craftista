@@ -1,0 +1,21 @@
+version: '3'
+services: 
+  catalogue:
+    image: craftista-catalogue
+    ports: 
+      - '5000:5000'
+
+  frontend:
+    image: craftista-frontend
+    ports: 
+      - '3000:3000'
+
+  recommendation:
+    image: craftista-recommendation
+    ports: 
+      - '8080:8080'
+
+  voting:
+    image: craftista-voting
+    ports: 
+      - '8090:8080'

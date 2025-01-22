@@ -1,0 +1,19 @@
+name: Catalogue Workflow
+on: 
+    push:
+        paths:
+            - 'frontend/**'
+jobs:
+    Run-Catalogue:
+        runs-on: ubuntu-latest
+        steps:
+            - run: echo "The job was automatically triggered by a ${{ github.event_name }} event in the 'frontend/' subdirectory. This job is now running on a ${{ runner.os }} server. The name of the branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
+
+            - name: Check out repository code
+              uses: actions/checkout@v4
+            - run: echo "The ${{ github.repository }} repository has been cloned to the runner. The workflow is now ready to test your code on the runner."
+
+            - name: List files in the repository
+              run: |
+                ls ${{ github.workspace }}
+            - run: echo "This job's status is ${{ job.status }}."

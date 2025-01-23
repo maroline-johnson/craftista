@@ -1,7 +1,7 @@
 name: Default Workflow
 on: [workflow_dispatch]
 jobs:
-    Run-Default:
+    Default-1:
         runs-on: ubuntu-latest
         steps:
             - run: echo "The job was automatically triggered by a ${{ github.event_name }} event. This job is now running on a ${{ runner.os }} server. The name of the branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
@@ -16,9 +16,33 @@ jobs:
               run: |
                 ls ${{ github.workspace }}
 
+    Lint:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Check out repository code
+              uses: actions/checkout@v4
+              with:
+                fetch-depth: 0
+            
             - name: Super Linter
               uses: super-linter/super-linter@v7.2.1
               env:
                 GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+    Security-Scan: 
+        runs-on: ubuntu-latest
+        steps:
+            - name: Check out repository code
+              uses: actions/checkout@v4
+              with:
+                fetch-depth: 0
+
+            - name: TruffleHog
+              uses: trufflesecurity/trufflehog@main
+              with:
+                extra_args: --results=verified,unknown
+
+    Default-2:
+        runs-on: ubuntu-latest
+        steps:
             - run: echo "This job's status is ${{ job.status }}."

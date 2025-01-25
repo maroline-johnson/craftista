@@ -1,4 +1,4 @@
-FROM golang 
+FROM golang:1.24
 WORKDIR /build
 COPY /recommendation/go.mod /recommendation/go.sum ./
 RUN go mod download

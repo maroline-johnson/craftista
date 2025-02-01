@@ -1,19 +1,33 @@
 name: Voting Workflow
 on: 
     push:
+        branches:
+            - 'main'
+        paths:
+            - 'voting/**'
+    pull_request:
+        branches:
+            - 'main'
         paths:
             - 'voting/**'
 jobs:
-    Run-Catalogue:
+    build-and-test:
         runs-on: ubuntu-latest
+        defaults:
+            run:
+                working-directory: ./voting
+
         steps:
-            - run: echo "The job was automatically triggered by a ${{ github.event_name }} event in the 'voting/' subdirectory. This job is now running on a ${{ runner.os }} server. The name of the branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
+            - uses: actions/checkout@v4
 
-            - name: Check out repository code
-              uses: actions/checkout@v4
-            - run: echo "The ${{ github.repository }} repository has been cloned to the runner. The workflow is now ready to test your code on the runner."
+            - name: Set up Java
+              uses: actions/setup-java@v2
+              with:
+                java-version: '19'
+                distribution: 'temurin'
 
-            - name: List files in the repository
-              run: |
-                ls ${{ github.workspace }}
-            - run: echo "This job's status is ${{ job.status }}."
+            - name: Build with Maven
+              run: mvn -B package --file pom.xml -DskipTests
+
+            - name: Test
+              run: mvn test

@@ -24,6 +24,8 @@ jobs:
                 go-version: ${{ vars.GO_VERSION }}
                 cache-dependency-path: recommendation/go.sum
             
+            - run: cd recommendation
+            
             - name: Build
               run: go build -v
 
@@ -34,9 +36,6 @@ jobs:
         needs: build-and-test
         if: github.event_name != 'pull_request'
         runs-on: ubuntu-latest
-        defaults:
-          run:
-            working-directory: ./recommendation
 
         steps:
           - uses: actions/checkout@v4

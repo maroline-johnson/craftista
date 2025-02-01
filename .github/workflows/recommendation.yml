@@ -13,9 +13,11 @@ on:
 jobs:
     build-and-test:
         runs-on: ubuntu-latest
+        defaults:
+            run:
+                working-directory: ./recommendation
 
         steps:
-            - run: echo "The job was automatically triggered by a ${{ github.event_name }} event in the 'recommendation/' subdirectory. This job is now running on a ${{ runner.os }} server. The name of the branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
             - uses: actions/checkout@v4
 
             - name: Set up Go
@@ -23,9 +25,7 @@ jobs:
               with:
                 go-version: ${{ vars.GO_VERSION }}
                 cache-dependency-path: recommendation/go.sum
-            
-            - run: cd recommendation
-            
+                        
             - name: Build
               run: go build -v
 
@@ -36,9 +36,13 @@ jobs:
         needs: build-and-test
         if: github.event_name != 'pull_request'
         runs-on: ubuntu-latest
+        defaults:
+            run:
+                working-directory: ./recommendation
 
         steps:
           - uses: actions/checkout@v4
+
           - name: Login to DockerHub
             uses: docker/login-action@v3
             with:

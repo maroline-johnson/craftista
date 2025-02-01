@@ -15,7 +15,7 @@ jobs:
         runs-on: ubuntu-latest
         defaults:
           run:
-            working-directory: ./recommendation
+            working-directory: recommendation
 
         steps:
             - run: echo "The job was automatically triggered by a ${{ github.event_name }} event in the 'recommendation/' subdirectory. This job is now running on a ${{ runner.os }} server. The name of the branch is ${{ github.ref }} and your repository is ${{ github.repository }}."

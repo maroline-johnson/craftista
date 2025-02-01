@@ -6,6 +6,10 @@ on:
 jobs:
     build-and-test:
         runs-on: ubuntu-latest
+        defaults:
+            run:
+                working-directory: ./frontend
+
         steps:
             - uses: actions/checkout@v4
 
@@ -18,7 +22,7 @@ jobs:
               run: npm install 
 
             - name: Build
-              run: npm run build
+              run: node app.js
 
             - name: Test 
               run: npm test

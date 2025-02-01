@@ -57,4 +57,4 @@ jobs:
             with:
               context: ./recommendation
               push: true
-              tags: ${{ vars.DOCKERHUB_USERNAME }}/recommendation:latest
+              tags: ${{ vars.DOCKERHUB_USERNAME }}/craftista-recommendation:latest
